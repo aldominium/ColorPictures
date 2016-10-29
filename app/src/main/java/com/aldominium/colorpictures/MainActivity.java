@@ -17,7 +17,7 @@ public class MainActivity extends AppCompatActivity {
     public void tomarFoto(View view) {
 
         Toast.makeText(this, "Foto!", Toast.LENGTH_SHORT).show();
-        
+
     }
 
     public void tomarVideo(View view) {
