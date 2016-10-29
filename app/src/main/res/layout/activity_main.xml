@@ -21,7 +21,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:srcCompat="@drawable/ic_photo_camera_black_48dp"
-            android:id="@+id/imageView"
+            android:id="@+id/botonCamara"
             android:layout_weight="1"
             android:scaleType="fitCenter"
             android:contentDescription="@string/imagen_camara"/>
@@ -30,7 +30,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:srcCompat="@drawable/ic_videocam_black_48dp"
-            android:id="@+id/imageView2"
+            android:id="@+id/botonVideoCamara"
             android:layout_weight="1"
             android:scaleType="fitCenter"
             android:contentDescription="@string/imagen_video"/>
@@ -47,7 +47,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:srcCompat="@drawable/ic_photo_library_black_48dp"
-            android:id="@+id/imageView3"
+            android:id="@+id/botonGaleriaFotos"
             android:layout_weight="1"
             android:scaleType="fitCenter"
             android:contentDescription="@string/imagen_galeria_fotos"/>
@@ -56,7 +56,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:srcCompat="@drawable/ic_video_library_black_48dp"
-            android:id="@+id/imageView4"
+            android:id="@+id/botonGaleriaVideos"
             android:layout_weight="1"
             android:scaleType="fitCenter"
             android:contentDescription="@string/imagen_galeria_videos"/>
