@@ -24,7 +24,8 @@
             android:id="@+id/botonCamara"
             android:layout_weight="1"
             android:scaleType="fitCenter"
-            android:contentDescription="@string/imagen_camara"/>
+            android:contentDescription="@string/imagen_camara"
+            android:onClick="tomarFoto"/>
 
         <ImageView
             android:layout_width="match_parent"
@@ -33,7 +34,8 @@
             android:id="@+id/botonVideoCamara"
             android:layout_weight="1"
             android:scaleType="fitCenter"
-            android:contentDescription="@string/imagen_video"/>
+            android:contentDescription="@string/imagen_video"
+            android:onClick="tomarVideo"/>
     </LinearLayout>
 
     <LinearLayout
@@ -50,7 +52,8 @@
             android:id="@+id/botonGaleriaFotos"
             android:layout_weight="1"
             android:scaleType="fitCenter"
-            android:contentDescription="@string/imagen_galeria_fotos"/>
+            android:contentDescription="@string/imagen_galeria_fotos"
+            android:onClick="verGaleriaFotos"/>
 
         <ImageView
             android:layout_width="match_parent"
@@ -59,6 +62,7 @@
             android:id="@+id/botonGaleriaVideos"
             android:layout_weight="1"
             android:scaleType="fitCenter"
-            android:contentDescription="@string/imagen_galeria_videos"/>
+            android:contentDescription="@string/imagen_galeria_videos"
+            android:onClick="verGaleriaVideos"/>
     </LinearLayout>
 </LinearLayout>
