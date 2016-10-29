@@ -24,8 +24,21 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
     }
 
-    
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        if (resultCode == RESULT_OK){
+            //Manejar la informmacion
+
+
+        }else{
+            
+            Toast.makeText(this, "Algo anda mal", Toast.LENGTH_SHORT).show();
+
+        }
+
+    }
 
     public void tomarFoto(View view) {
 
