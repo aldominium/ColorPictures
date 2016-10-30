@@ -1,6 +1,7 @@
 package com.aldominium.colorpictures;
 
 import android.content.Intent;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -59,5 +60,18 @@ public class MainActivity extends AppCompatActivity {
 
     public void verGaleriaVideos(View view) {
         Toast.makeText(this, "Galeria de Video!", Toast.LENGTH_SHORT).show();
+    }
+
+    private boolean almacenamientoExternoDisponible(){
+
+        String estado = Environment.getExternalStorageState();
+
+        if (estado.equals(Environment.MEDIA_MOUNTED)){
+            return true;
+        }else {
+            return false;
+        }
+
+
     }
 }
