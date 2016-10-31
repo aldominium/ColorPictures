@@ -50,6 +50,16 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
 
+            if (requestCode == PETICION_VIDEO){
+
+                Intent intent = new Intent(Intent.ACTION_VIEW, mediaUri);
+
+                intent.setDataAndType(mediaUri,"video/*");
+
+                startActivity(intent);
+
+            }
+
 
         }else{
 
