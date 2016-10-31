@@ -25,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
 
     public static final int MEDIA_FOTO = 5;
     public static final int MEDIA_VIDEO = 6;
+    private static final int MAX_DURATION = 30;
 
     private Uri mediaUri;
 
@@ -86,7 +87,28 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void tomarVideo(View view) {
-        Toast.makeText(this, "Video!", Toast.LENGTH_SHORT).show();
+
+        try {
+
+            mediaUri = crearArchivoMedio(MEDIA_VIDEO);
+
+            if (mediaUri == null){
+
+                Toast.makeText(this, "Hubo un problema", Toast.LENGTH_SHORT).show();
+
+            }else{
+
+                Intent intent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
+                intent.putExtra(MediaStore.EXTRA_OUTPUT,mediaUri);
+                intent.putExtra(MediaStore.EXTRA_DURATION_LIMIT,MAX_DURATION);
+                startActivityForResult(intent,PETICION_VIDEO);
+            }
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
     public void verGaleriaFotos(View view) {
