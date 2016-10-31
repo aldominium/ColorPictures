@@ -1,6 +1,7 @@
 package com.aldominium.colorpictures;
 
 import android.content.Intent;
+import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -107,6 +108,7 @@ public class MainActivity extends AppCompatActivity {
 
             Log.d("TAG", archivo.getAbsolutePath());
 
+            MediaScannerConnection.scanFile(this, new String[] { archivo.getPath() }, new String[] { "image/jpeg","video/mp4" }, null);
 
             return Uri.fromFile(archivo);
 
@@ -121,6 +123,7 @@ public class MainActivity extends AppCompatActivity {
 
             Log.d("TAG", archivo.getAbsolutePath());
 
+            MediaScannerConnection.scanFile(this, new String[] { archivo.getPath() }, new String[] { "image/jpeg","video/mp4" }, null);
 
             return Uri.fromFile(archivo);
 
