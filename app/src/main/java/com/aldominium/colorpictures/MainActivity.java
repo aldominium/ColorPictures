@@ -25,6 +25,8 @@ public class MainActivity extends AppCompatActivity {
     public static final int MEDIA_FOTO = 5;
     public static final int MEDIA_VIDEO = 6;
 
+    private Uri mediaUri;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,9 +52,27 @@ public class MainActivity extends AppCompatActivity {
 
     public void tomarFoto(View view) {
 
-        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        try {
 
-        startActivityForResult(intent,PETICION_FOTO);
+            mediaUri = crearArchivoMedio(MEDIA_FOTO);
+
+            if (mediaUri == null){
+
+                Toast.makeText(this, "Hubo un problema", Toast.LENGTH_SHORT).show();
+
+            }else{
+
+                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                intent.putExtra(MediaStore.EXTRA_OUTPUT,mediaUri);
+                startActivityForResult(intent,PETICION_FOTO);
+            }
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
 
 
     }
