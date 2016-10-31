@@ -136,6 +136,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void verGaleriaVideos(View view) {
+        
         Toast.makeText(this, "Galeria de Video!", Toast.LENGTH_SHORT).show();
     }
 
