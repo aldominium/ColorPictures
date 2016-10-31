@@ -1,12 +1,19 @@
 package com.aldominium.colorpictures;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
+
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -60,6 +67,52 @@ public class MainActivity extends AppCompatActivity {
 
     public void verGaleriaVideos(View view) {
         Toast.makeText(this, "Galeria de Video!", Toast.LENGTH_SHORT).show();
+    }
+
+    private Uri crearArchivoMedio(int tipoMedio) throws IOException {
+
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+
+        String nombreArchivo;
+        File archivo;
+
+        if (tipoMedio == MEDIA_FOTO){
+
+
+            nombreArchivo = "IMG_" + timeStamp + "_";
+
+            File directorioAlmacenamiento = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
+
+            archivo = File.createTempFile(nombreArchivo,".jpg", directorioAlmacenamiento);
+
+            Log.d("TAG", archivo.getAbsolutePath());
+
+
+            return Uri.fromFile(archivo);
+
+
+        }else if(tipoMedio == MEDIA_VIDEO){
+
+            nombreArchivo = "MOV_" + timeStamp + "_";
+
+            File directorioAlmacenamiento = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MOVIES);
+
+            archivo = File.createTempFile(nombreArchivo,".mp4", directorioAlmacenamiento);
+
+            Log.d("TAG", archivo.getAbsolutePath());
+
+
+            return Uri.fromFile(archivo);
+
+
+
+        }else{
+
+            return null;
+        }
+
+        
+
     }
 
     private boolean almacenamientoExternoDisponible(){
