@@ -60,6 +60,12 @@ public class MainActivity extends AppCompatActivity {
 
             }
 
+            if (requestCode == PETICION_GALERIA_FOTOS){
+                Intent intent = new Intent(this, ImageActivity.class);
+                intent.setData(data.getData());
+                startActivity(intent);
+            }
+
 
         }else{
 
@@ -122,7 +128,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void verGaleriaFotos(View view) {
-        Toast.makeText(this, "Galeria de Fotos!", Toast.LENGTH_SHORT).show();
+
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        intent.setType("image/*");
+        startActivityForResult(intent, PETICION_GALERIA_FOTOS);
+
     }
 
     public void verGaleriaVideos(View view) {
