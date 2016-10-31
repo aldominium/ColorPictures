@@ -66,6 +66,12 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
 
+            if (requestCode == PETICION_GALERIA_VIDEOS){
+                Intent intent = new Intent(this, VideoActivity.class);
+                intent.setData(data.getData());
+                startActivity(intent);
+            }
+
 
         }else{
 
@@ -136,8 +142,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void verGaleriaVideos(View view) {
-        
-        Toast.makeText(this, "Galeria de Video!", Toast.LENGTH_SHORT).show();
+
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        intent.setType("video/*");
+        startActivityForResult(intent, PETICION_GALERIA_VIDEOS);
+
     }
 
     private Uri crearArchivoMedio(int tipoMedio) throws IOException {
