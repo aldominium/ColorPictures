@@ -42,6 +42,13 @@ public class MainActivity extends AppCompatActivity {
         if (resultCode == RESULT_OK){
             //Manejar la informmacion
 
+            if (requestCode == PETICION_FOTO){
+                //Ver la foto
+                Intent intent = new Intent(this,ImageActivity.class);
+                intent.setData(mediaUri);
+                startActivity(intent);
+            }
+
 
         }else{
 
