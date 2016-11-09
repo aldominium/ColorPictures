@@ -1,10 +1,14 @@
 package com.aldominium.colorpictures;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.media.MediaScannerConnection;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -26,6 +30,8 @@ public class MainActivity extends AppCompatActivity {
     public static final int MEDIA_FOTO = 5;
     public static final int MEDIA_VIDEO = 6;
     private static final int MAX_DURATION = 30;
+    private static final String TAG = MainActivity.class.getSimpleName();
+    private static final int CAMERA_WRITE_PERMISSION = 11;
 
     private Uri mediaUri;
 
@@ -83,53 +89,98 @@ public class MainActivity extends AppCompatActivity {
 
     public void tomarFoto(View view) {
 
-        try {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
 
-            mediaUri = crearArchivoMedio(MEDIA_FOTO);
+            if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
 
-            if (mediaUri == null){
+                if (shouldShowRequestPermissionRationale(Manifest.permission.WRITE_EXTERNAL_STORAGE)){
+                    mostrarExplicacion();
+                    requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},CAMERA_WRITE_PERMISSION);
+                }else{
+                    requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},CAMERA_WRITE_PERMISSION);
+                }
 
-                Toast.makeText(this, "Hubo un problema", Toast.LENGTH_SHORT).show();
 
             }else{
-
-                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                intent.putExtra(MediaStore.EXTRA_OUTPUT,mediaUri);
-                startActivityForResult(intent,PETICION_FOTO);
+                crearMedio(PETICION_FOTO);
             }
 
+        }else {
 
-        } catch (IOException e) {
-            e.printStackTrace();
+            crearMedio(PETICION_FOTO);
         }
-
 
 
 
     }
 
+    private void mostrarExplicacion() {
+
+        new AlertDialog.Builder(this)
+                .setTitle("Necesito tu permiso")
+                .setMessage("Necesito tu permiso para poder guardar tus fotos y videos")
+                .setNeutralButton("Ok", null)
+                .show();
+
+    }
+
+
     public void tomarVideo(View view) {
+
+        crearMedio(PETICION_VIDEO);
+
+    }
+
+    private void crearMedio(int tipoPeticion){
 
         try {
 
-            mediaUri = crearArchivoMedio(MEDIA_VIDEO);
-
-            if (mediaUri == null){
-
-                Toast.makeText(this, "Hubo un problema", Toast.LENGTH_SHORT).show();
-
-            }else{
-
-                Intent intent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
-                intent.putExtra(MediaStore.EXTRA_OUTPUT,mediaUri);
-                intent.putExtra(MediaStore.EXTRA_DURATION_LIMIT,MAX_DURATION);
-                startActivityForResult(intent,PETICION_VIDEO);
-            }
-
+            if (tipoPeticion == PETICION_FOTO)
+                mediaUri = crearArchivoMedio(MEDIA_FOTO);
+            else if(tipoPeticion == PETICION_VIDEO)
+                mediaUri= crearArchivoMedio(MEDIA_VIDEO);
+            else
+                throw new IllegalArgumentException();
 
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        if (mediaUri == null){
+
+            Toast.makeText(this, "Hubo un problema", Toast.LENGTH_SHORT).show();
+        }else {
+
+            iniciarCamara(mediaUri,tipoPeticion);
+
+        }
+
+
+    }
+
+
+    private void iniciarCamara(Uri mediaUri, int tipoPeticion){
+
+        Intent intent;
+
+        if (tipoPeticion== PETICION_VIDEO){
+
+            intent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
+            intent.putExtra(MediaStore.EXTRA_OUTPUT,mediaUri);
+            intent.putExtra(MediaStore.EXTRA_DURATION_LIMIT,MAX_DURATION);
+            startActivityForResult(intent,tipoPeticion);
+
+        }else if(tipoPeticion == PETICION_FOTO){
+
+            intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            intent.putExtra(MediaStore.EXTRA_OUTPUT,mediaUri);
+            startActivityForResult(intent,tipoPeticion);
+        }else {
+
+            throw new IllegalArgumentException();
+        }
+
+
 
     }
 
@@ -150,6 +201,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private Uri crearArchivoMedio(int tipoMedio) throws IOException {
+
+        if(! almacenamientoExternoDisponible())
+            return null;
+
 
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
 
